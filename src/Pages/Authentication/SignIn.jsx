@@ -106,7 +106,7 @@ const SignIn = () => {
                                 </div>
                                 {errors.password && <span className="text-error text-xs mt-1">{errors.password.message}</span>}
                             </div>
-                            <button type="submit" disabled={loginMutation.isPending} className="btn bg-[#2563EB] hover:bg-[#1d4ed8] text-white border-none w-full normal-case text-base shadow-lg">
+                            <button type="submit" disabled={loginMutation.isPending} className="btn bg-primary hover:bg-primary/80 text-white border-none w-full normal-case text-base shadow-lg">
                                 {loginMutation.isPending ? <span className="loading loading-spinner"></span> : "Sign In"}
                             </button>
                         </form>

@@ -104,18 +104,18 @@ const SignUp = () => {
                 <div className="card w-full max-w-md bg-base-100">
                     <div className="card-body p-0 md:p-8">
                         <div className="mb-6 text-center md:text-left">
-                            <h1 className="text-3xl font-bold italic text-[#2563EB]">FinTrack</h1>
+                            <h1 className="text-3xl font-bold italic text-primary">FinTrack</h1>
                             <h2 className="text-3xl font-bold">Create Account</h2>
                         </div>
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                             <div className="flex flex-col items-center mb-4">
                                 <div className="relative">
                                     <div className="avatar">
-                                        <div className="w-24 h-24 rounded-full ring ring-[#2563EB] ring-offset-2 overflow-hidden bg-gray-100">
+                                        <div className="w-24 h-24 rounded-full ring ring-primary ring-offset-2 overflow-hidden bg-gray-100">
                                             {preview ? <img src={preview} alt="Profile" /> : <div className="flex items-center justify-center h-full text-gray-400"><HiUser size={48} /></div>}
                                         </div>
                                     </div>
-                                    <label htmlFor="photo-upload" className="absolute bottom-0 right-0 bg-[#10B981] p-2 rounded-full text-white cursor-pointer hover:bg-[#0da06f] transition-all shadow-lg">
+                                    <label htmlFor="photo-upload" className="absolute bottom-0 right-0 bg-secondary/85 p-2 rounded-full text-white cursor-pointer hover:bg-secondary transition-all shadow-lg">
                                         <HiCamera size={18} />
                                         <input id="photo-upload" type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
                                     </label>

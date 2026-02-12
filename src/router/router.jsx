@@ -3,6 +3,7 @@ import RootLayout from "../Layouts/RootLayout";
 import SignIn from "../Pages/Authentication/SignIn";
 import SignUp from "../Pages/Authentication/SignUp";
 import DashboardLayout from "../Layouts/DashboardLayout";
+import PrivetRoute from "../routes/PrivetRoute";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,6 @@ export const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <DashboardLayout />
+    element: <PrivetRoute><DashboardLayout /></PrivetRoute>
   }
 ]);

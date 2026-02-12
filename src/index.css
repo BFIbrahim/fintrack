@@ -8,8 +8,8 @@
 @plugin "daisyui/theme" {
   name: "FinTrack_Theme";
   default: true;
-  --color-primary: #2563EB; 
-  --color-secondary: #10B981; 
+  --color-primary: #10B981; 
+  --color-secondary: #2563EB; 
   --color-accent: #0F172A;
 }
 

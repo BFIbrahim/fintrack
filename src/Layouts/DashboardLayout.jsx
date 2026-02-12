@@ -38,8 +38,8 @@ const DashboardLayout = () => {
     };
 
     const navLinkStyles = ({ isActive }) => 
-        `flex items-center gap-2 rounded-lg px-3 py-2 transition hover:bg-accent/40 hover:text-black ${
-            isActive ? "bg-primary/40 text-black" : "text-gray-700"
+        `flex items-center gap-2 rounded-lg px-3 py-2 transition hover:bg-secondary/40 hover:text-accent ${
+            isActive ? "bg-primary/40 text-accent" : "text-gray-700"
         }`;
 
     return (
@@ -65,10 +65,11 @@ const DashboardLayout = () => {
 
                 <aside className="w-80 min-h-full flex flex-col bg-base-100">
                     
-                    <div className="p-6 border-b border-primary/10">
+                    <div className="p-4 border-b border-primary/10">
                         <h1 className="text-2xl font-black text-primary italic">
                             FinTrack
                         </h1>
+                        <span className="text-sm text-neutral">Smart Money Management</span>
                     </div>
 
                     <ul className="menu p-4 w-full flex-1 gap-1">
@@ -98,7 +99,7 @@ const DashboardLayout = () => {
 
                         <button 
                             onClick={handleLogout}
-                            className="flex items-center gap-2 w-full rounded-lg px-3 py-2.5 transition text-gray-700 hover:bg-red-50 hover:text-red-600 font-bold text-sm"
+                            className="flex items-center gap-2 w-full rounded-lg px-3 py-2.5 transition text-gray-700 hover:bg-red-50 hover:text-[#EF4444] font-bold text-sm cursor-pointer"
                         >
                             <MdLogout className="text-lg" />
                             Logout
