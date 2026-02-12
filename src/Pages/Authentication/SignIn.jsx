@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { HiMail, HiLockClosed, HiEye, HiEyeOff, HiChartBar, HiShieldCheck, HiPresentationChartLine } from "react-icons/hi";
-import { FcGoogle } from "react-icons/fc";
+import { Link, useNavigate } from 'react-router';
+import { useMutation } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
+import useAxios from '../../hooks/useAxios';
 
 const SignIn = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const axiosInstance = useAxios();
+    const navigate = useNavigate();
 
     const {
         register,
@@ -12,13 +17,36 @@ const SignIn = () => {
         formState: { errors }
     } = useForm();
 
+    const loginMutation = useMutation({
+        mutationFn: async (loginData) => {
+            const response = await axiosInstance.post('/login', loginData);
+            return response.data;
+        },
+        onSuccess: (data) => {
+            localStorage.setItem('token', data.token);
+
+            Swal.fire({
+                title: 'Welcome Back!',
+                text: 'Login successful.',
+                icon: 'success',
+                timer: 2000,
+                showConfirmButton: false
+            });
+
+            navigate('/dashboard'); 
+        },
+        onError: (error) => {
+            const errorMsg = error.response?.data?.message || "Invalid Email or Password!";
+            Swal.fire({ title: 'Error!', text: errorMsg, icon: 'error' });
+        }
+    });
+
     const onSubmit = (data) => {
-        console.log('Form Data:', data);
+        loginMutation.mutate(data);
     };
 
     return (
-        <div className="min-h-screen flex flex-col md:flex-row font-sans">
-
+        <div className="min-h-screen flex flex-col md:flex-row">
             <div className="hidden md:flex md:w-1/2 bg-[#2563EB] text-white p-12 flex-col justify-center relative overflow-hidden">
                 <div className="absolute inset-0 opacity-10 pointer-events-none">
                     <svg width="100%" height="100%"><rect width="100%" height="100%" fill="url(#grid)" /><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="1" /></pattern></defs></svg>
@@ -80,7 +108,8 @@ const SignIn = () => {
                                     <input
                                         type="email"
                                         placeholder="name@company.com"
-                                        {...register("email", { required: "Email is required" })} className={`input input-bordered w-full pl-10 focus:outline-none focus:border-[#2563EB] ${errors.email ? 'border-error' : ''}`}
+                                        {...register("email", { required: "Email is required" })} 
+                                        className={`input input-bordered w-full pl-10 focus:outline-none focus:border-[#2563EB] ${errors.email ? 'border-error' : ''}`}
                                     />
                                 </div>
                                 {errors.email && <span className="text-error text-xs mt-1">{errors.email.message}</span>}
@@ -91,7 +120,7 @@ const SignIn = () => {
                                     <span className="label-text font-semibold">Password</span>
                                 </label>
                                 <div className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 text-xl">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 text-xl z-10">
                                         <HiLockClosed />
                                     </div>
                                     <input
@@ -111,16 +140,20 @@ const SignIn = () => {
                                 {errors.password && <span className="text-error text-xs mt-1">{errors.password.message}</span>}
                             </div>
 
-                            <button type="submit" className="btn bg-[#2563EB] hover:bg-[#1d4ed8] text-white border-none w-full normal-case text-base shadow-lg">
-                                Sign In
+                            <button 
+                                type="submit" 
+                                disabled={loginMutation.isPending}
+                                className="btn bg-[#2563EB] hover:bg-[#1d4ed8] text-white border-none w-full normal-case text-base shadow-lg"
+                            >
+                                {loginMutation.isPending ? <span className="loading loading-spinner"></span> : "Sign In"}
                             </button>
                         </form>
 
                         <footer className="text-center mt-6 text-sm text-gray-600">
                             New here?{' '}
-                            <a href="#" className="font-bold text-[#10B981] hover:underline">
+                            <Link to="/signup" className="font-bold text-[#10B981] hover:underline">
                                 Create an Account
-                            </a>
+                            </Link>
                         </footer>
                     </div>
                 </div>
