@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { FiMenu } from "react-icons/fi";
-import { MdSpaceDashboard, MdLogout } from "react-icons/md";
+import { MdSpaceDashboard, MdLogout, MdTrendingUp, MdRestaurantMenu, MdCategory, MdOutlineStar, MdKitchen, MdCalendarMonth } from "react-icons/md";
 import { NavLink, Outlet, useNavigate } from "react-router";
+import { FaBook, FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const DashboardLayout = () => {
     const { user, logoutUser } = useContext(AuthContext);
     const navigate = useNavigate();
-
     const isAdmin = user?.role === 'admin';
 
     const handleLogout = () => {
@@ -38,74 +38,109 @@ const DashboardLayout = () => {
     };
 
     const navLinkStyles = ({ isActive }) => 
-        `flex items-center gap-2 rounded-lg px-3 py-2 transition hover:bg-secondary/40 hover:text-accent ${
-            isActive ? "bg-primary/40 text-accent" : "text-gray-700"
+        `flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 group relative ${
+            isActive 
+            ? "bg-primary text-white shadow-md shadow-primary/20" 
+            : "text-gray-500 hover:bg-primary/10 hover:text-primary"
         }`;
 
     return (
-        <div className="drawer lg:drawer-open bg-base-100 text-base-content">
+        <div className="drawer lg:drawer-open bg-slate-50 min-h-screen">
             <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
 
-            <div className="drawer-content flex flex-col bg-gray-100">
-                <div className="navbar bg-base-100 border-b border-neutral/30 lg:hidden">
+            <div className="drawer-content flex flex-col">
+                <div className="navbar bg-white/80 backdrop-blur-md border-b border-slate-200 lg:hidden sticky top-0 z-40">
                     <div className="flex-none">
                         <label htmlFor="dashboard-drawer" className="btn btn-ghost text-primary text-xl">
                             <FiMenu />
                         </label>
                     </div>
-                    <div className="flex-1">
-                        <span className="text-lg font-bold text-primary">FinTrack</span>
+                    <div className="flex-1 px-2">
+                        <span className="text-xl font-black text-primary italic">FinTrack</span>
                     </div>
                 </div>
-                <Outlet />
+
+                <main className="p-6 lg:p-10">
+                    <Outlet />
+                </main>
             </div>
 
             <div className="drawer-side z-50">
                 <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
 
-                <aside className="w-80 min-h-full flex flex-col bg-base-100">
+                <aside className="w-72 min-h-full flex flex-col bg-white border-r border-slate-200 shadow-xl shadow-slate-200/50">
                     
-                    <div className="p-4 border-b border-primary/10">
-                        <h1 className="text-2xl font-black text-primary italic">
-                            FinTrack
-                        </h1>
-                        <span className="text-sm text-neutral">Smart Money Management</span>
+                    <div className="p-8 border-b border-slate-100 bg-gradient-to-b from-slate-50 to-transparent">
+                        <div className="flex items-center gap-2.5 mb-2">
+                            <div className="bg-primary p-2 rounded-xl shadow-lg shadow-primary/30">
+                                <MdTrendingUp className="text-white text-xl" />
+                            </div>
+                            <h1 className="text-2xl font-black tracking-tight italic">
+                                <span className="text-primary">Fin</span>
+                                <span className="text-accent">Track</span>
+                            </h1>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <span className="h-[1px] w-4 bg-primary/40"></span>
+                            <span className="text-[10px] uppercase tracking-[0.15em] font-bold text-slate-400">
+                                Smart Money Management
+                            </span>
+                        </div>
                     </div>
 
-                    <ul className="menu p-4 w-full flex-1 gap-1">
-                        <li>
-                            <NavLink to="/dashboard" end className={navLinkStyles}>
-                                <MdSpaceDashboard /> Dashboard
-                            </NavLink>
-                        </li>
-                    </ul>
+                    <nav className="flex-1 px-4 py-6 overflow-y-auto custom-scrollbar">
+                        <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-4 mb-4">Main Menu</p>
+                        <ul className="space-y-2">
+                            <li>
+                                <NavLink to="/dashboard" end className={navLinkStyles}>
+                                    <MdSpaceDashboard className="text-xl" /> 
+                                    <span className="font-semibold">Dashboard</span>
+                                </NavLink>
+                            </li>
 
-                    <div className="mt-auto border-t border-primary/10 p-4 space-y-2">
-                        <div className="flex items-center gap-3 p-2">
+                            {isAdmin ? (
+                                <>
+                                    <li><NavLink to="/dashboard/manage-recipe" className={navLinkStyles}><MdRestaurantMenu className="text-xl" /> <span className="font-semibold">Manage Recipes</span></NavLink></li>
+                                    <li><NavLink to="/dashboard/manage-categories" className={navLinkStyles}><MdCategory className="text-xl" /> <span className="font-semibold">Categories</span></NavLink></li>
+                                    <li><NavLink to="/dashboard/manage-reviews" className={navLinkStyles}><MdOutlineStar className="text-xl" /> <span className="font-semibold">Reviews</span></NavLink></li>
+                                    <li><NavLink to="/dashboard/manage-users" className={navLinkStyles}><FaUsers className="text-xl" /> <span className="font-semibold">User Control</span></NavLink></li>
+                                </>
+                            ) : (
+                                <>
+                                    <li><NavLink to="/dashboard/all-recipes" className={navLinkStyles}><MdKitchen className="text-xl" /> <span className="font-semibold">Explore Recipes</span></NavLink></li>
+                                    <li><NavLink to="/dashboard/meal-planner" className={navLinkStyles}><MdCalendarMonth className="text-xl" /> <span className="font-semibold">Meal Planner</span></NavLink></li>
+                                    <li><NavLink to="/dashboard/personal-cookbook" className={navLinkStyles}><FaBook className="text-lg" /> <span className="font-semibold">My Cookbook</span></NavLink></li>
+                                </>
+                            )}
+                        </ul>
+                    </nav>
+
+                    <div className="p-4 bg-slate-50/50 border-t border-slate-100 mt-auto">
+                        <div className="flex items-center gap-3 p-3 bg-white rounded-2xl border border-slate-100 shadow-sm mb-3">
                             <div className="avatar">
-                                <div className="w-10 rounded-full ring ring-primary ring-offset-1 ring-offset-base-100">
+                                <div className="w-10 rounded-xl ring-2 ring-primary/10">
                                     <img src={user?.profileImage || "https://i.ibb.co/2kR2zq0/user.png"} alt="User" />
                                 </div>
                             </div>
-                            <div className="overflow-hidden">
-                                <h3 className="font-bold text-sm text-primary truncate uppercase">
+                            <div className="flex-1 overflow-hidden">
+                                <h3 className="font-bold text-sm text-slate-800 truncate uppercase tracking-tight">
                                     {user?.name || "Guest User"}
                                 </h3>
-                                <p className="text-[10px] text-neutral font-bold opacity-60 tracking-widest">
-                                    {isAdmin ? "ADMIN PORTAL" : "USER PANEL"}
+                                <p className="text-[9px] text-primary font-black uppercase tracking-widest flex items-center gap-1">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                                    {isAdmin ? "Admin" : "Member"}
                                 </p>
                             </div>
                         </div>
 
-                        <button 
+                        <button
                             onClick={handleLogout}
-                            className="flex items-center gap-2 w-full rounded-lg px-3 py-2.5 transition text-gray-700 hover:bg-red-50 hover:text-[#EF4444] font-bold text-sm cursor-pointer"
+                            className="flex items-center justify-center gap-2 w-full rounded-xl px-3 py-3 transition-all duration-200 text-slate-500 hover:bg-red-50 hover:text-red-500 font-bold text-sm cursor-pointer group"
                         >
-                            <MdLogout className="text-lg" />
-                            Logout
+                            <MdLogout className="text-lg group-hover:-translate-x-1 transition-transform" />
+                            Sign Out
                         </button>
                     </div>
-
                 </aside>
             </div>
         </div>
