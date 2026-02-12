@@ -10,9 +10,7 @@
   default: true;
   --color-primary: #2563EB; 
   --color-secondary: #10B981; 
-  --color-accent: #0F172A; 
-  --color-neutral: #1E293B;
-  --color-base-100: #FFFFFF;
+  --color-accent: #0F172A;
 }
 
 @layer base {
