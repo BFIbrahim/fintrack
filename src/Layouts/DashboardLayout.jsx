@@ -45,7 +45,7 @@ const DashboardLayout = () => {
         }`;
 
     return (
-        <div className="drawer lg:drawer-open bg-slate-50 min-h-screen">
+        <div className="drawer lg:drawer-open bg-slate-100 min-h-screen">
             <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
 
             <div className="drawer-content flex flex-col">
@@ -98,20 +98,19 @@ const DashboardLayout = () => {
                                 </NavLink>
                             </li>
 
-                            {isAdmin ? (
-                                <>
-                                    <li><NavLink to="/dashboard/manage-recipe" className={navLinkStyles}><MdRestaurantMenu className="text-xl" /> <span className="font-semibold">Manage Recipes</span></NavLink></li>
-                                    <li><NavLink to="/dashboard/manage-categories" className={navLinkStyles}><MdCategory className="text-xl" /> <span className="font-semibold">Categories</span></NavLink></li>
-                                    <li><NavLink to="/dashboard/manage-reviews" className={navLinkStyles}><MdOutlineStar className="text-xl" /> <span className="font-semibold">Reviews</span></NavLink></li>
-                                    <li><NavLink to="/dashboard/manage-users" className={navLinkStyles}><FaUsers className="text-xl" /> <span className="font-semibold">User Control</span></NavLink></li>
-                                </>
-                            ) : (
-                                <>
-                                    <li><NavLink to="/dashboard/all-recipes" className={navLinkStyles}><MdKitchen className="text-xl" /> <span className="font-semibold">Explore Recipes</span></NavLink></li>
-                                    <li><NavLink to="/dashboard/meal-planner" className={navLinkStyles}><MdCalendarMonth className="text-xl" /> <span className="font-semibold">Meal Planner</span></NavLink></li>
-                                    <li><NavLink to="/dashboard/personal-cookbook" className={navLinkStyles}><FaBook className="text-lg" /> <span className="font-semibold">My Cookbook</span></NavLink></li>
-                                </>
-                            )}
+                            <li>
+                                <NavLink to="/dashboard/transaction" end className={navLinkStyles}>
+                                    <MdSpaceDashboard className="text-xl" /> 
+                                    <span className="font-semibold">Transaction</span>
+                                </NavLink>
+                            </li>
+
+                            <li>
+                                <NavLink to="/dashboard/manage-categories" end className={navLinkStyles}>
+                                    <MdSpaceDashboard className="text-xl" /> 
+                                    <span className="font-semibold">Manage Category</span>
+                                </NavLink>
+                            </li>
                         </ul>
                     </nav>
 

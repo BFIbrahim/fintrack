@@ -4,6 +4,8 @@ import SignIn from "../Pages/Authentication/SignIn";
 import SignUp from "../Pages/Authentication/SignUp";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import PrivetRoute from "../routes/PrivetRoute";
+import Transactions from "../Pages/Dashboard/User/Transaction";
+import ManageCategory from "../Pages/Dashboard/Admin/ManageCategory";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +24,16 @@ export const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <PrivetRoute><DashboardLayout /></PrivetRoute>
+    element: <PrivetRoute><DashboardLayout /></PrivetRoute>,
+    children: [
+      {
+        path: 'transaction',
+        element: <Transactions />
+      },
+      {
+        path: 'manage-categories',
+        element: <ManageCategory />
+      }
+    ]
   }
 ]);
