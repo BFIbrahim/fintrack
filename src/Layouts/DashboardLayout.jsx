@@ -111,6 +111,12 @@ const DashboardLayout = () => {
                                     <span className="font-semibold">Manage Category</span>
                                 </NavLink>
                             </li>
+                            <li>
+                                <NavLink to="/dashboard/budget-planner" end className={navLinkStyles}>
+                                    <MdCategory className="text-xl" /> 
+                                    <span className="font-semibold">Budget Planner</span>
+                                </NavLink>
+                            </li>
                         </ul>
                     </nav>
 
