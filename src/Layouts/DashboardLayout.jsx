@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { FiMenu } from "react-icons/fi";
-import { MdSpaceDashboard, MdLogout, MdTrendingUp, MdRestaurantMenu, MdCategory, MdOutlineStar, MdKitchen, MdCalendarMonth, MdPayment } from "react-icons/md";
+import { MdSpaceDashboard, MdLogout, MdTrendingUp, MdRestaurantMenu, MdCategory, MdOutlineStar, MdKitchen, MdCalendarMonth, MdPayment, MdAccountBalanceWallet, MdAnalytics } from "react-icons/md";
 import { NavLink, Outlet, useNavigate } from "react-router";
 import { FaBook, FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
@@ -99,6 +99,13 @@ const DashboardLayout = () => {
                             </li>
 
                             <li>
+                                <NavLink to="/dashboard/analytics" end className={navLinkStyles}>
+                                    <MdAnalytics className="text-xl" /> 
+                                    <span className="font-semibold">Analytics</span>
+                                </NavLink>
+                            </li>
+
+                            <li>
                                 <NavLink to="/dashboard/transaction" end className={navLinkStyles}>
                                     <MdPayment className="text-xl" /> 
                                     <span className="font-semibold">Transaction</span>
@@ -113,7 +120,7 @@ const DashboardLayout = () => {
                             </li>
                             <li>
                                 <NavLink to="/dashboard/budget-planner" end className={navLinkStyles}>
-                                    <MdCategory className="text-xl" /> 
+                                    <MdAccountBalanceWallet className="text-xl" /> 
                                     <span className="font-semibold">Budget Planner</span>
                                 </NavLink>
                             </li>

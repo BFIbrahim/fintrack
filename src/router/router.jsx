@@ -7,6 +7,7 @@ import PrivetRoute from "../routes/PrivetRoute";
 import Transactions from "../Pages/Dashboard/User/Transaction";
 import ManageCategory from "../Pages/Dashboard/Admin/ManageCategory";
 import BudgetPlanner from "../Pages/Dashboard/User/BudgetPlanner";
+import Analytics from "../Pages/Dashboard/User/Analytics";
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
       {
         path: 'budget-planner',
         element: <BudgetPlanner />
+      },
+      {
+        path: 'analytics',
+        element: <Analytics />
       }
     ]
   }
