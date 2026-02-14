@@ -8,6 +8,7 @@ import Transactions from "../Pages/Dashboard/User/Transaction";
 import ManageCategory from "../Pages/Dashboard/Admin/ManageCategory";
 import BudgetPlanner from "../Pages/Dashboard/User/BudgetPlanner";
 import Analytics from "../Pages/Dashboard/User/Analytics";
+import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
       {
         path: 'analytics',
         element: <Analytics />
+      },
+      {
+        path: 'manage-users',
+        element: <ManageUsers />
       }
     ]
   }

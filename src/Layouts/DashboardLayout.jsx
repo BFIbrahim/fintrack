@@ -124,6 +124,12 @@ const DashboardLayout = () => {
                                     <span className="font-semibold">Budget Planner</span>
                                 </NavLink>
                             </li>
+                            <li>
+                                <NavLink to="/dashboard/manage-users" end className={navLinkStyles}>
+                                    <MdAccountBalanceWallet className="text-xl" /> 
+                                    <span className="font-semibold">Manage Users</span>
+                                </NavLink>
+                            </li>
                         </ul>
                     </nav>
 
