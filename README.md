@@ -64,8 +64,8 @@ For testing purposes, you may use the following pre-configured accounts:
     - npm run dev
 
 ## 👨‍💻 Developed By 
-Name:	    MD. Ibrahim Hossain
-Email:	    mdibrahim361r@gmail.com
-Phone	    +880 1956633205
-GitHub:	    github.com/BFIbrahim
-LinkedIn:	https://www.linkedin.com/in/md-ibrahim-hossain-76918836b
+- Name:	        MD. Ibrahim Hossain
+- Email:	    mdibrahim361r@gmail.com
+- Phone	        +880 1956633205
+- GitHub:	    github.com/BFIbrahim
+- LinkedIn:	    https://www.linkedin.com/in/md-ibrahim-hossain-76918836b
