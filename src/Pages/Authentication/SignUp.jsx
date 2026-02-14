@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { HiMail, HiLockClosed, HiUser, HiCamera, HiChartBar, HiShieldCheck, HiEye, HiEyeOff } from "react-icons/hi";
 import { MdTrendingUp } from "react-icons/md";
@@ -12,18 +12,23 @@ const SignUp = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [preview, setPreview] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
-    
-    const { loginUser, refetchUser } = useContext(AuthContext);
+    const { user, loading, loginUser, refetchUser } = useContext(AuthContext);
     const axiosInstance = useAxios();
     const navigate = useNavigate();
-    
+
+    useEffect(() => {
+        if (!loading && user) {
+            navigate('/dashboard', { replace: true });
+        }
+    }, [user, loading, navigate]);
+
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const uploadImageToImgbb = async (file) => {
         const formData = new FormData();
         formData.append("image", file);
         const IMGBB_API_KEY = import.meta.env.VITE_IMGBB_API_KEY;
-        
+
         const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
             method: "POST",
             body: formData,
@@ -57,7 +62,7 @@ const SignUp = () => {
                 position: 'top-end',
                 showConfirmButton: false
             });
-            navigate('/dashboard'); 
+            navigate('/dashboard');
         },
         onError: (error) => {
             const errorMsg = error.response?.data?.message || "Registration failed!";
@@ -81,12 +86,20 @@ const SignUp = () => {
         registerMutation.mutate({ ...data, profileImageFile: selectedFile });
     };
 
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-slate-50">
+                <span className="loading loading-spinner loading-lg text-primary"></span>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen flex flex-col md:flex-row bg-slate-50">
             <div className="hidden md:flex md:w-1/2 bg-primary text-white p-16 flex-col justify-between relative overflow-hidden">
                 <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
                 <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"></div>
-                
+
                 <div className="relative z-10">
                     <div className="flex items-center gap-2.5 mb-12">
                         <div className="bg-white p-2 rounded-xl shadow-lg">
@@ -166,11 +179,11 @@ const SignUp = () => {
                             <label className="text-sm font-bold text-slate-700 ml-1">Full Name</label>
                             <div className="relative group">
                                 <HiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-xl text-slate-400 group-focus-within:text-primary transition-colors" />
-                                <input 
-                                    type="text" 
-                                    placeholder="John Doe" 
-                                    {...register("fullName", { required: "Name is required" })} 
-                                    className={`w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-3.5 pl-12 pr-4 outline-none transition-all focus:border-primary focus:bg-white focus:shadow-xl focus:shadow-primary/5 ${errors.fullName ? 'border-red-400' : ''}`} 
+                                <input
+                                    type="text"
+                                    placeholder="John Doe"
+                                    {...register("fullName", { required: "Name is required" })}
+                                    className={`w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-3.5 pl-12 pr-4 outline-none transition-all focus:border-primary focus:bg-white focus:shadow-xl focus:shadow-primary/5 ${errors.fullName ? 'border-red-400' : ''}`}
                                 />
                             </div>
                             {errors.fullName && <span className="text-red-500 text-xs font-bold ml-1">{errors.fullName.message}</span>}
@@ -180,11 +193,11 @@ const SignUp = () => {
                             <label className="text-sm font-bold text-slate-700 ml-1">Email Address</label>
                             <div className="relative group">
                                 <HiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-xl text-slate-400 group-focus-within:text-primary transition-colors" />
-                                <input 
-                                    type="email" 
-                                    placeholder="name@company.com" 
-                                    {...register("email", { required: "Email is required" })} 
-                                    className={`w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-3.5 pl-12 pr-4 outline-none transition-all focus:border-primary focus:bg-white focus:shadow-xl focus:shadow-primary/5 ${errors.email ? 'border-red-400' : ''}`} 
+                                <input
+                                    type="email"
+                                    placeholder="name@company.com"
+                                    {...register("email", { required: "Email is required" })}
+                                    className={`w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-3.5 pl-12 pr-4 outline-none transition-all focus:border-primary focus:bg-white focus:shadow-xl focus:shadow-primary/5 ${errors.email ? 'border-red-400' : ''}`}
                                 />
                             </div>
                             {errors.email && <span className="text-red-500 text-xs font-bold ml-1">{errors.email.message}</span>}
@@ -194,15 +207,15 @@ const SignUp = () => {
                             <label className="text-sm font-bold text-slate-700 ml-1">Password</label>
                             <div className="relative group">
                                 <HiLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 text-xl text-slate-400 group-focus-within:text-primary transition-colors" />
-                                <input 
-                                    type={showPassword ? "text" : "password"} 
-                                    placeholder="••••••••" 
-                                    className={`w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-3.5 pl-12 pr-12 outline-none transition-all focus:border-primary focus:bg-white focus:shadow-xl focus:shadow-primary/5 ${errors.password ? 'border-red-400' : ''}`} 
-                                    {...register("password", { required: "Min 6 chars", minLength: 6 })} 
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="••••••••"
+                                    className={`w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-3.5 pl-12 pr-12 outline-none transition-all focus:border-primary focus:bg-white focus:shadow-xl focus:shadow-primary/5 ${errors.password ? 'border-red-400' : ''}`}
+                                    {...register("password", { required: "Min 6 chars", minLength: 6 })}
                                 />
-                                <button 
-                                    type="button" 
-                                    onClick={() => setShowPassword(!showPassword)} 
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
                                     className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary transition-colors text-xl"
                                 >
                                     {showPassword ? <HiEyeOff /> : <HiEye />}
@@ -211,9 +224,9 @@ const SignUp = () => {
                             {errors.password && <span className="text-red-500 text-xs font-bold ml-1">{errors.password.message}</span>}
                         </div>
 
-                        <button 
-                            type="submit" 
-                            disabled={registerMutation.isPending} 
+                        <button
+                            type="submit"
+                            disabled={registerMutation.isPending}
                             className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-2xl shadow-xl shadow-primary/20 transition-all active:scale-[0.98] disabled:opacity-70 flex items-center justify-center gap-2 text-lg mt-4"
                         >
                             {registerMutation.isPending ? <span className="loading loading-spinner"></span> : "Create Account"}

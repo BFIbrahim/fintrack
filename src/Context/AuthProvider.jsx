@@ -3,21 +3,37 @@ import { AuthContext } from './AuthContext';
 import { useCurrentUser } from '../hooks/useCurrentUser';
 
 const AuthProvider = ({ children }) => {
+    // ১. সার্ভার থেকে কারেন্ট ইউজার ডাটা ফেচ করা
     const { data: initialUser, isLoading, refetch } = useCurrentUser();
 
+    // ২. স্টেট ইনিশিয়ালাইজেশন (লোকাল স্টোরেজ থেকে)
     const [user, setUser] = useState(() => {
         const saved = localStorage.getItem("userInfo");
-        return saved ? JSON.parse(saved) : initialUser || null;
+        try {
+            return saved ? JSON.parse(saved) : null;
+        } catch (error) {
+            return null;
+            
+        }
     });
 
+    // ৩. ইউজারের জন্য একটি ম্যানুয়াল লোডিং স্টেট (যাতে লোকাল ডাটা থাকা অবস্থায় লোডিং না দেখায়)
+    const [authLoading, setAuthLoading] = useState(true);
+
     useEffect(() => {
-        if (initialUser) setUser(initialUser);
-    }, [initialUser]);
+        if (!isLoading) {
+            if (initialUser) {
+                setUser(initialUser);
+                localStorage.setItem("userInfo", JSON.stringify(initialUser));
+            }
+            setAuthLoading(false);
+        }
+    }, [initialUser, isLoading]);
 
     const loginUser = (userData, token) => {
-        setUser(userData);
-        localStorage.setItem("userInfo", JSON.stringify(userData));
         localStorage.setItem("authToken", token);
+        localStorage.setItem("userInfo", JSON.stringify(userData));
+        setUser(userData);
         refetch?.();
     };
 
@@ -25,19 +41,20 @@ const AuthProvider = ({ children }) => {
         setUser(null);
         localStorage.removeItem("userInfo");
         localStorage.removeItem("authToken");
-
         return Promise.resolve();
     };
 
     const authInfo = {
         user,
-        loading: isLoading,
+        // এখানে isLoading এবং authLoading দুইটাই কনসিডার করা হয়েছে
+        loading: isLoading || authLoading, 
         refetchUser: refetch,
         loginUser,
         logoutUser,
     };
+
     return (
-        <AuthContext.Provider value={authInfo} >
+        <AuthContext.Provider value={authInfo}>
             {children}
         </AuthContext.Provider>
     );

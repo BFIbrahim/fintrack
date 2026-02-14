@@ -10,6 +10,8 @@ import BudgetPlanner from "../Pages/Dashboard/User/BudgetPlanner";
 import Analytics from "../Pages/Dashboard/User/Analytics";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import DashboardIndex from "../Components/DashboardIndex";
+import Forbidden from "../Components/Forbidden";
+import AdminRoute from "../routes/AdminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -19,10 +21,14 @@ export const router = createBrowserRouter([
         {
             index: true,
             element: <SignIn />
-        } ,
+        },
         {
             path: '/signup',
             element: <SignUp />
+        },
+        {
+          path: '/forbidden',
+          element: <Forbidden />
         }
     ]
   },
@@ -40,7 +46,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'manage-categories',
-        element: <ManageCategory />
+        element: <AdminRoute><ManageCategory /></AdminRoute>
       },
       {
         path: 'budget-planner',
@@ -52,7 +58,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'manage-users',
-        element: <ManageUsers />
+        element: <AdminRoute><ManageUsers /></AdminRoute>
       }
     ]
   }

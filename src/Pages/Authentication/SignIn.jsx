@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react'; 
 import { useForm } from 'react-hook-form';
 import { HiMail, HiLockClosed, HiEye, HiEyeOff, HiChartBar, HiShieldCheck } from "react-icons/hi";
 import { MdTrendingUp } from "react-icons/md";
@@ -10,9 +10,14 @@ import { AuthContext } from '../../Context/AuthContext';
 
 const SignIn = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const { loginUser, refetchUser } = useContext(AuthContext);
+    const { user, loading, loginUser, refetchUser } = useContext(AuthContext); 
     const axiosInstance = useAxios();
     const navigate = useNavigate();
+    useEffect(() => {
+        if (!loading && user) {
+            navigate('/dashboard', { replace: true });
+        }
+    }, [user, loading, navigate]);
 
     const {
         register,
@@ -50,6 +55,14 @@ const SignIn = () => {
     const onSubmit = (data) => {
         loginMutation.mutate(data);
     };
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-slate-50">
+                <span className="loading loading-spinner loading-lg text-primary"></span>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen flex flex-col md:flex-row bg-slate-50">
@@ -128,7 +141,6 @@ const SignIn = () => {
                         <div className="space-y-2">
                             <div className="flex justify-between items-center ml-1">
                                 <label className="text-sm font-bold text-slate-700">Password</label>
-                                <a href="#" className="text-xs font-bold text-primary hover:underline">Forgot password?</a>
                             </div>
                             <div className="relative group">
                                 <HiLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 text-xl text-slate-400 group-focus-within:text-primary transition-colors" />
