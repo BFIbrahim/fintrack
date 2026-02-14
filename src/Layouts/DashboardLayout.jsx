@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { FiMenu } from "react-icons/fi";
-import { MdSpaceDashboard, MdLogout, MdTrendingUp, MdRestaurantMenu, MdCategory, MdOutlineStar, MdKitchen, MdCalendarMonth, MdPayment, MdAccountBalanceWallet, MdAnalytics, MdManageAccounts } from "react-icons/md";
+import { MdSpaceDashboard, MdLogout, MdTrendingUp, MdCategory, MdAccountBalanceWallet, MdAnalytics, MdManageAccounts, MdPayment } from "react-icons/md";
 import { NavLink, Outlet, useNavigate } from "react-router";
-import { FaBook, FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const DashboardLayout = () => {
@@ -37,10 +36,9 @@ const DashboardLayout = () => {
         });
     };
 
-    const navLinkStyles = ({ isActive }) => 
-        `flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 group relative ${
-            isActive 
-            ? "bg-primary text-white shadow-md shadow-primary/20" 
+    const navLinkStyles = ({ isActive }) =>
+        `flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 group relative ${isActive
+            ? "bg-primary text-white shadow-md shadow-primary/20"
             : "text-gray-500 hover:bg-primary/10 hover:text-primary"
         }`;
 
@@ -69,7 +67,7 @@ const DashboardLayout = () => {
                 <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
 
                 <aside className="w-72 min-h-full flex flex-col bg-white border-r border-slate-200 shadow-xl shadow-slate-200/50">
-                    
+
                     <div className="p-8 border-b border-slate-100 bg-gradient-to-b from-slate-50 to-transparent">
                         <div className="flex items-center gap-2.5 mb-2">
                             <div className="bg-primary p-2 rounded-xl shadow-lg shadow-primary/30">
@@ -93,43 +91,50 @@ const DashboardLayout = () => {
                         <ul className="space-y-2">
                             <li>
                                 <NavLink to="/dashboard" end className={navLinkStyles}>
-                                    <MdSpaceDashboard className="text-xl" /> 
+                                    <MdSpaceDashboard className="text-xl" />
                                     <span className="font-semibold">Dashboard</span>
                                 </NavLink>
                             </li>
 
-                            <li>
-                                <NavLink to="/dashboard/analytics" end className={navLinkStyles}>
-                                    <MdAnalytics className="text-xl" /> 
-                                    <span className="font-semibold">Analytics</span>
-                                </NavLink>
-                            </li>
+                            {!isAdmin && (
+                                <>
+                                    <li>
+                                        <NavLink to="/dashboard/transaction" end className={navLinkStyles}>
+                                            <MdPayment className="text-xl" />
+                                            <span className="font-semibold">Transaction</span>
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="/dashboard/analytics" end className={navLinkStyles}>
+                                            <MdAnalytics className="text-xl" />
+                                            <span className="font-semibold">Analytics</span>
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="/dashboard/budget-planner" end className={navLinkStyles}>
+                                            <MdAccountBalanceWallet className="text-xl" />
+                                            <span className="font-semibold">Budget Planner</span>
+                                        </NavLink>
+                                    </li>
+                                </>
+                            )}
 
-                            <li>
-                                <NavLink to="/dashboard/transaction" end className={navLinkStyles}>
-                                    <MdPayment className="text-xl" /> 
-                                    <span className="font-semibold">Transaction</span>
-                                </NavLink>
-                            </li>
-
-                            <li>
-                                <NavLink to="/dashboard/manage-categories" end className={navLinkStyles}>
-                                    <MdCategory className="text-xl" /> 
-                                    <span className="font-semibold">Manage Category</span>
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/budget-planner" end className={navLinkStyles}>
-                                    <MdAccountBalanceWallet className="text-xl" /> 
-                                    <span className="font-semibold">Budget Planner</span>
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/manage-users" end className={navLinkStyles}>
-                                    <MdManageAccounts className="text-xl" /> 
-                                    <span className="font-semibold">Manage Users</span>
-                                </NavLink>
-                            </li>
+                            {isAdmin && (
+                                <>
+                                    <li>
+                                        <NavLink to="/dashboard/manage-categories" end className={navLinkStyles}>
+                                            <MdCategory className="text-xl" />
+                                            <span className="font-semibold">Manage Category</span>
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="/dashboard/manage-users" end className={navLinkStyles}>
+                                            <MdManageAccounts className="text-xl" />
+                                            <span className="font-semibold">Manage Users</span>
+                                        </NavLink>
+                                    </li>
+                                </>
+                            )}
                         </ul>
                     </nav>
 
