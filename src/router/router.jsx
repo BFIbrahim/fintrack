@@ -9,6 +9,7 @@ import ManageCategory from "../Pages/Dashboard/Admin/ManageCategory";
 import BudgetPlanner from "../Pages/Dashboard/User/BudgetPlanner";
 import Analytics from "../Pages/Dashboard/User/Analytics";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
+import DashboardIndex from "../Components/DashboardIndex";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
     path: '/dashboard',
     element: <PrivetRoute><DashboardLayout /></PrivetRoute>,
     children: [
+      {
+        index: true,
+        element: <DashboardIndex />
+      },
       {
         path: 'transaction',
         element: <Transactions />

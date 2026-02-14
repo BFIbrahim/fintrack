@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { FiMenu } from "react-icons/fi";
-import { MdSpaceDashboard, MdLogout, MdTrendingUp, MdRestaurantMenu, MdCategory, MdOutlineStar, MdKitchen, MdCalendarMonth, MdPayment, MdAccountBalanceWallet, MdAnalytics } from "react-icons/md";
+import { MdSpaceDashboard, MdLogout, MdTrendingUp, MdRestaurantMenu, MdCategory, MdOutlineStar, MdKitchen, MdCalendarMonth, MdPayment, MdAccountBalanceWallet, MdAnalytics, MdManageAccounts } from "react-icons/md";
 import { NavLink, Outlet, useNavigate } from "react-router";
 import { FaBook, FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
@@ -126,7 +126,7 @@ const DashboardLayout = () => {
                             </li>
                             <li>
                                 <NavLink to="/dashboard/manage-users" end className={navLinkStyles}>
-                                    <MdAccountBalanceWallet className="text-xl" /> 
+                                    <MdManageAccounts className="text-xl" /> 
                                     <span className="font-semibold">Manage Users</span>
                                 </NavLink>
                             </li>
