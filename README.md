@@ -49,8 +49,7 @@ For testing purposes, you may use the following pre-configured accounts:
 ## ⚙️ Installation & Setup
 
 1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/BFIbrahim/fintrack](https://github.com/BFIbrahim/fintrack)
+   git clone: https://github.com/BFIbrahim/fintrack.git 
 
 2. **Navigate to the directory:**
     - cd fintrack
@@ -69,4 +68,4 @@ Name:	    MD. Ibrahim Hossain
 Email:	    mdibrahim361r@gmail.com
 Phone	    +880 1956633205
 GitHub:	    github.com/BFIbrahim
-LinkedIn:	[linkedin.com/in/md-ibrahim-hossain](https://www.linkedin.com/in/md-ibrahim-hossain-76918836b/)
+LinkedIn:	https://www.linkedin.com/in/md-ibrahim-hossain-76918836b
